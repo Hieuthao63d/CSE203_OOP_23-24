@@ -9,5 +9,22 @@ package com.mycompany.lab1;
  * @author Phan Thao
  */
 public class Q4 {
+
+    public Q4(int[] array) {
+        this.array = array;
+    }
+
+    public Q4() {
+    }
+    private int[]array;
+    public int calculateSum(){
+        int sum=0;
+        for(int num:array){
+            if (num %2==0){
+                sum+=num;
+            }
+        }
+        return sum;
+    }
     
 }
