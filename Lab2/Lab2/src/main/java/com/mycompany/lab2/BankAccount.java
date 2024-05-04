@@ -8,6 +8,6 @@ package com.mycompany.lab2;
  *
  * @author Phan Thao
  */
-public class Q2_BankAccount {
+public class BankAccount {
     
 }

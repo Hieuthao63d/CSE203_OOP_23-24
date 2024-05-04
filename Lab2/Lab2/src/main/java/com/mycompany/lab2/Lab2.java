@@ -36,7 +36,7 @@ public class Lab2 {
         product.print();
         */
         //Q2
-        ArrayList<Q2_BankAccount> accounts = new ArrayList<>();
+        ArrayList<BankAccount> accounts = new ArrayList<>();
 
         System.out.print("Enter the number of accounts: ");
         int N = scanner.nextInt();
@@ -45,11 +45,11 @@ public class Lab2 {
             int accNum = scanner.nextInt();
             String name = scanner.next();
             double balance = scanner.nextDouble();
-            accounts.add(new BankAccount(accNum, name, balance));
+            accounts.add(new BankAccount().new BankAccount(accNum, name, balance));
         }
 
         System.out.println("Account list:");
-        for (Q2_BankAccount account : accounts) {
+        for (BankAccount account : accounts) {
             account.print();
         }
 
