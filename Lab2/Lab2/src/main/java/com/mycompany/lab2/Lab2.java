@@ -35,7 +35,9 @@ public class Lab2 {
         System.out.print("Product: ");
         product.print();
          */
+
         //Q2
+        /*
         ArrayList<BankAccount> accounts = new ArrayList<>();
 
         System.out.print("Enter the number of accounts: ");
@@ -114,6 +116,19 @@ public class Lab2 {
             System.out.println("Either source or target account number is incorrect.");
         }
         scanner.close();
+         */
+        ArrayList<Employee> employees = new ArrayList<>();
+
+        Employee.inputEmployees(employees, scanner);
+        Employee.printEmployees(employees);
+        Employee highestPaidEmployee = Employee.getHighestSalaryEmployee(employees);
+        System.out.println("Employee with the highest salary: " + highestPaidEmployee);
+
+        Employee.sortEmployeesByDecreasingSalary(employees);
+        System.out.println("Employees sorted by decreasing salary:");
+        Employee.printEmployees(employees);
+        scanner.close();
+
     }
 
 }
