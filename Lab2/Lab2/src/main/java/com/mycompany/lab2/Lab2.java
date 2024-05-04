@@ -113,7 +113,6 @@ public class Lab2 {
         } else {
             System.out.println("Either source or target account number is incorrect.");
         }
-
         scanner.close();
     }
 
