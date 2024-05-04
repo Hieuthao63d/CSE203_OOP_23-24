@@ -1,8 +1,8 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.mycompany.lab2;
+
 import java.util.*;
 
 /**
@@ -34,7 +34,7 @@ public class Lab2 {
         Q1_Complex product = c1.multiply(c2);
         System.out.print("Product: ");
         product.print();
-        */
+         */
         //Q2
         ArrayList<BankAccount> accounts = new ArrayList<>();
 
@@ -45,7 +45,7 @@ public class Lab2 {
             int accNum = scanner.nextInt();
             String name = scanner.next();
             double balance = scanner.nextDouble();
-            accounts.add(new BankAccount().new BankAccount(accNum, name, balance));
+            accounts.add(new BankAccount(accNum, name, balance));
         }
 
         System.out.println("Account list:");
@@ -53,7 +53,68 @@ public class Lab2 {
             account.print();
         }
 
-        // Deposit, withdraw, and transfer money here...
+        // Deposit money into an account
+        System.out.print("Enter account number to deposit money into: ");
+        int accNum = scanner.nextInt();
+        System.out.print("Enter amount to deposit: ");
+        double amount = scanner.nextDouble();
+        for (BankAccount account : accounts) {
+            if (account.getAccNum() == accNum) {
+                account.deposit(amount);
+                System.out.println("After deposit, account details are: ");
+                account.print();
+                break;
+            }
+        }
+
+        // Withdraw money from an account
+        System.out.print("Enter account number to withdraw money from: ");
+        accNum = scanner.nextInt();
+        System.out.print("Enter amount to withdraw: ");
+        amount = scanner.nextDouble();
+        for (BankAccount account : accounts) {
+            if (account.getAccNum() == accNum) {
+                boolean success = account.withdraw(amount);
+                if (success) {
+                    System.out.println("After withdrawal, account details are: ");
+                    account.print();
+                } else {
+                    System.out.println("Insufficient balance to withdraw.");
+                }
+                break;
+            }
+        }
+
+        // Transfer money from one account to another
+        System.out.print("Enter source account number for money transfer: ");
+        int sourceAccNum = scanner.nextInt();
+        System.out.print("Enter target account number for money transfer: ");
+        int targetAccNum = scanner.nextInt();
+        System.out.print("Enter amount to transfer: ");
+        amount = scanner.nextDouble();
+        BankAccount sourceAccount = null, targetAccount = null;
+        for (BankAccount account : accounts) {
+            if (account.getAccNum() == sourceAccNum) {
+                sourceAccount = account;
+            } else if (account.getAccNum() == targetAccNum) {
+                targetAccount = account;
+            }
+        }
+        if (sourceAccount != null && targetAccount != null) {
+            boolean success = sourceAccount.transferMoney(targetAccount, amount);
+            if (success) {
+                System.out.println("After transfer, source account details are: ");
+                sourceAccount.print();
+                System.out.println("After transfer, target account details are: ");
+                targetAccount.print();
+            } else {
+                System.out.println("Insufficient balance to transfer.");
+            }
+        } else {
+            System.out.println("Either source or target account number is incorrect.");
+        }
+
+        scanner.close();
     }
-    
+
 }
