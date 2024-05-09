@@ -13,7 +13,7 @@ public class Employee {
     private String name;
     private int yearsOfService;
     private double salaryCoefficient;
-    private static double basicSalary = 1000;
+    private static double basicSalary = 1800000;
 
     public Employee(String code, String name, int yearsOfService, double salaryCoefficient) {
         this.code = code;
