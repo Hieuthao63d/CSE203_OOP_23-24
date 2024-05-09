@@ -12,7 +12,9 @@ import java.util.*;
 public class Lab2 {
 
     public static void main(String[] args) {
-        //Q1
+        
+
+//Q1
         Scanner scanner = new Scanner(System.in);
         /*
         Q1_Complex c1 = new Q1_Complex();
@@ -36,8 +38,10 @@ public class Lab2 {
         product.print();
          */
 
-        //Q2
-        /*
+        
+        
+//Q2
+       /* 
         ArrayList<BankAccount> accounts = new ArrayList<>();
 
         System.out.print("Enter the number of accounts: ");
@@ -117,6 +121,9 @@ public class Lab2 {
         }
         scanner.close();
          */
+       
+       
+//Q3        
         ArrayList<Employee> employees = new ArrayList<>();
 
         Employee.inputEmployees(employees, scanner);
@@ -128,7 +135,7 @@ public class Lab2 {
         System.out.println("Employees sorted by decreasing salary:");
         Employee.printEmployees(employees);
         scanner.close();
-
+        
     }
 
 }
