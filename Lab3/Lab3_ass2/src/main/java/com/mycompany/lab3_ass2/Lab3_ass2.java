@@ -1,12 +1,13 @@
 /*
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  */
-
 package com.mycompany.lab3_ass2;
+
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.Scanner;
+
 /**
  *
  * @author Phan Thao
@@ -31,7 +32,7 @@ public class Lab3_ass2 {
             System.out.println("11. Exit");
             System.out.print("Choose an option: ");
             int choice = scanner.nextInt();
-            scanner.nextLine();  // Consume newline left-over
+            scanner.nextLine();  
 
             switch (choice) {
                 case 1:
@@ -49,8 +50,8 @@ public class Lab3_ass2 {
                     manager.showAllPartTimeEmployees();
                     break;
                 case 5:
-    manager.displayAllEmployees();
-    break;
+                    manager.displayAllEmployees();
+                    break;
                 case 6:
                     System.out.print("Enter Employee ID:");
                     Employee e = manager.findEmployeeById(scanner.next());
@@ -75,9 +76,9 @@ public class Lab3_ass2 {
                     manager.searchEmployeesByPayment(from, to);
                     break;
                 case 10:
-    manager.sortEmployeesByAgeAndPayment();
-    manager.displayAllEmployees();
-    break;
+                    manager.sortEmployeesByAgeAndPayment();
+                    manager.displayAllEmployees();
+                    break;
                 case 11:
                     System.out.println("Exiting...");
                     scanner.close();
