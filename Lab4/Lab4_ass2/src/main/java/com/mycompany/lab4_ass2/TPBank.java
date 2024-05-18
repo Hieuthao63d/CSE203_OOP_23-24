@@ -11,6 +11,6 @@ package com.mycompany.lab4_ass2;
 public class TPBank implements Bank{
     @Override
     public String getBankName(){
-        publ
+        return "TPBANK";
     }
 }
