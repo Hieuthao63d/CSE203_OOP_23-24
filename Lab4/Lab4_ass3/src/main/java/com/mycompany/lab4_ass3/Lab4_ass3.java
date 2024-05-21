@@ -14,6 +14,8 @@ import java.util.Vector;
 public class Lab4_ass3 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        MenuManager menuManager = new MenuManager();
+        menuManager.displayMenu();
+
     }
 }
