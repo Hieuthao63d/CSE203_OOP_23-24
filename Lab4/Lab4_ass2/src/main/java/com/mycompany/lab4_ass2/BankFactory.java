@@ -9,5 +9,16 @@ package com.mycompany.lab4_ass2;
  * @author Phan Thao
  */
 public class BankFactory {
-    public static Bank getBank (Banktype bankType)
+    public static Bank getBank (BankType bankType){
+        switch (bankType) {
+            case TPBANK:
+                return new TPBank();
+            case VIETCOMBANK:
+                return new VietcomBank();
+            default:
+                throw new IllegalArgumentException("This bank type is unsupported");
+        }
+        
+    }
+    
 }

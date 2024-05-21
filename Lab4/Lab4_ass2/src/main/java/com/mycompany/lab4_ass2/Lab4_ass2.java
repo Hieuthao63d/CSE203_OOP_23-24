@@ -3,6 +3,7 @@
  */
 
 package com.mycompany.lab4_ass2;
+import java.util.Scanner;
 
 /**
  *
@@ -11,6 +12,19 @@ package com.mycompany.lab4_ass2;
 public class Lab4_ass2 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        Scanner scanner = new Scanner(System.in);
+        System.out.println("Enter bank name (TPBANK or VIETCOMBANK): ");
+        String bankName = scanner.nextLine().toUpperCase();
+
+        Bank bank;
+        try {
+            BankType bankType = BankType.valueOf(bankName);
+            bank = BankFactory.getBank(bankType);
+            System.out.println("Bank name: " + bank.getBankName());
+        } catch (IllegalArgumentException e) {
+            System.out.println("Invalid bank name entered.");
+        }
+
+        scanner.close();
     }
 }

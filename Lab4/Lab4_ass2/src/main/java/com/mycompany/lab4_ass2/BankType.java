@@ -8,6 +8,7 @@ package com.mycompany.lab4_ass2;
  *
  * @author Phan Thao
  */
-public class BankType {
+public enum BankType {
+    TPBANK, VIETCOMBANK;
     
 }
