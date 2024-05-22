@@ -139,6 +139,7 @@ public class MenuManager {
             return s1.getStudentNumber().compareTo(s2.getStudentNumber());
         });
         System.out.println("Students sorted successfully.");
+        printStudentList();
     }
 
     private void findStudentByName() {
