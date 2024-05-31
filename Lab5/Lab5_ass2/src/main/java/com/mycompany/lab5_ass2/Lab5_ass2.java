@@ -11,6 +11,8 @@ package com.mycompany.lab5_ass2;
 public class Lab5_ass2 {
 
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        
+        MenuManager menuManager = new MenuManager();
+        menuManager.displayMenu();
     }
 }
