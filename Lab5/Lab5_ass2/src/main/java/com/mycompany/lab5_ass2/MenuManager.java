@@ -3,112 +3,116 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.lab5_ass2;
-import java.util.Scanner;
-import java.util.ArrayList;
-import java.util.List;
-import java.io.FileOutputStream;
-import java.io.ObjectOutputStream;
-import java.io.IOException;
+import java.util.*;
+import java.io.*;
 /**
  *
  * @author Phan Thao
  */
 public class MenuManager {
-    private ArrayList<Staff> staffList = new ArrayList<>();
-    private Scanner scanner = new Scanner(System.in);
+    private static List<Staff> staffList = new ArrayList<>();
+    private static Scanner scanner = new Scanner(System.in);
 
-    public void displayMenu() {
+    public static void main(String[] args) {
         while (true) {
-            System.out.println("\nChoose an option:");
-            System.out.println("1. Add staff");
-            System.out.println("2. Save and Exit");
-            String option = scanner.nextLine();
+            System.out.println("\n1. Add Staff");
+            System.out.println("2. Save and Calculate Salaries");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
+            int choice = scanner.nextInt();
+            scanner.nextLine(); // Consume newline
 
-            switch (option) {
-                case "1":
+            switch (choice) {
+                case 1:
                     addStaff();
                     break;
-                case "2":
-                    saveStaffList();
-                    System.out.println("Exiting...");
-                    scanner.close();
-                    return;
-                default:
-                    System.out.println("Invalid option. Please try again.");
+                case 2:
+                    saveAllData();
                     break;
+                case 3:
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid choice!");
             }
         }
     }
 
-    private void addStaff() {
-        System.out.println("Enter staff type (Lecturer/Assistant/Researcher/Specialist):");
-        String staffType = scanner.nextLine();
-        System.out.println("Enter full name:");
+    private static void addStaff() {
+        // Giống như ví dụ trước, thêm nhân viên
+        System.out.print("Enter full name: ");
         String fullName = scanner.nextLine();
-        System.out.println("Enter date of birth:");
+        System.out.print("Enter date of birth (dd/MM/yyyy): ");
         String dob = scanner.nextLine();
-        System.out.println("Enter personnel ID:");
-        String personnelID = scanner.nextLine();
+        System.out.print("Enter personnel ID: ");
+        String pid = scanner.nextLine();
+        // Lặp lại cho các loại nhân viên khác...
+    }
 
-        switch (staffType.toLowerCase()) {
-            case "lecturer":
-                addLecturer(fullName, dob, personnelID);
-                break;
-            case "assistant":
-                addAssistant(fullName, dob, personnelID);
-                break;
-            case "researcher":
-                addResearcher(fullName, dob, personnelID);
-                break;
-            case "specialist":
-                addSpecialist(fullName, dob, personnelID);
-                break;
-            default:
-                System.out.println("Invalid staff type.");
-                break;
+    private static void saveAllData() {
+        saveStaff(); // Lưu thông tin nhân viên
+        saveTotalSalary(); // Lưu tổng lương
+        saveTotalSalaryByType(); // Lưu tổng lương theo loại nhân viên
+        saveHighestPaidStaff(); // Lưu 3 nhân viên có lương cao nhất
+    }
+
+    private static void saveStaff() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("EiuStaff.eiu"))) {
+            for (Staff staff : staffList) {
+                writer.write(staff.toString());
+                writer.newLine();
+            }
+            System.out.println("Staff information saved to EiuStaff.eiu");
+        } catch (IOException e) {
+            System.out.println("Error saving staff information: " + e.getMessage());
         }
     }
 
-    private void addLecturer(String fullName, String dob, String personnelID) {
-        System.out.println("Enter academic rank:");
-        String rank = scanner.nextLine();
-        System.out.println("Enter academic degree:");
-        String degree = scanner.nextLine();
-        System.out.println("Enter years of teaching:");
-        int yearsTeaching = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter subjects taught (comma-separated):");
-        List<String> subjects = List.of(scanner.nextLine().split(","));
-        staffList.add(new Lecturer(fullName, dob, personnelID, rank, degree, yearsTeaching, subjects));
-    }
-
-    private void addAssistant(String fullName, String dob, String personnelID) {
-        System.out.println("Enter number of subjects assisted:");
-        int numSubjects = Integer.parseInt(scanner.nextLine());
-        staffList.add(new TeachingAssistant(fullName, dob, personnelID, numSubjects));
-    }
-
-    private void addResearcher(String fullName, String dob, String personnelID) {
-        System.out.println("Enter years of research:");
-        int yearsResearch = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter project codes (comma-separated):");
-        List<String> projects = List.of(scanner.nextLine().split(","));
-        staffList.add(new Researcher(fullName, dob, personnelID, projects, yearsResearch));
-    }
-
-    private void addSpecialist(String fullName, String dob, String personnelID) {
-        System.out.println("Enter years of work experience:");
-        int yearsWork = Integer.parseInt(scanner.nextLine());
-        System.out.println("Enter project codes (comma-separated):");
-        List<String> eduProjects = List.of(scanner.nextLine().split(","));
-        staffList.add(new Specialist(fullName, dob, personnelID, eduProjects, yearsWork));
-    }
-
-    private void saveStaffList() {
-        try (ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream("EiuStaff.eiu"))) {
-            oos.writeObject(staffList);
-            System.out.println("Data has been saved.");
+    private static void saveTotalSalary() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("TotalSalary.eiu"))) {
+            double totalSalary = staffList.stream()
+                .mapToDouble(Staff::calculateSalary)
+                .sum();
+            writer.write("Total salary of all staff: " + totalSalary);
+            System.out.println("Total salary saved to TotalSalary.eiu");
         } catch (IOException e) {
-            System.out.println("Error writing to file: " + e.getMessage());
+            System.out.println("Error saving total salary: " + e.getMessage());
+        }
+    }
+
+    private static void saveTotalSalaryByType() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("TotalSalarybyType.eiu"))) {
+            Map<String, Double> salaryByType = new HashMap<>();
+            staffList.forEach(staff -> {
+                String type = staff.getClass().getSimpleName();
+                salaryByType.merge(type, staff.calculateSalary(), Double::sum);
+            });
+            salaryByType.forEach((type, total) -> {
+                try {
+                    writer.write(type + " total salary: " + total);
+                    writer.newLine();
+                } catch (IOException e) {
+                    System.out.println("Error writing salary by type: " + e.getMessage());
+                }
+            });
+            System.out.println("Total salary by type saved to TotalSalarybyType.eiu");
+        } catch (IOException e) {
+            System.out.println("Error saving salary by type: " + e.getMessage());
+        }
+    }
+
+    private static void saveHighestPaidStaff() {
+        try (BufferedWriter writer = new BufferedWriter(new FileWriter("HighestPaidStaff.eiu"))) {
+            List<Staff> sortedBySalary = new ArrayList<>(staffList);
+            sortedBySalary.sort(Comparator.comparingDouble(Staff::calculateSalary).reversed());
+            for (int i = 0; i < Math.min(3, sortedBySalary.size()); i++) {
+                Staff staff = sortedBySalary.get(i);
+                writer.write(staff.toString() + " - Salary: " + staff.calculateSalary());
+                writer.newLine();
+            }
+            System.out.println("Top 3 highest paid staff saved to HighestPaidStaff.eiu");
+        } catch (IOException e) {
+            System.out.println("Error saving highest paid staff: " + e.getMessage());
         }
     }
 }

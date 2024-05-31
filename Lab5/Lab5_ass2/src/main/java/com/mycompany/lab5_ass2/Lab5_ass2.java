@@ -12,7 +12,7 @@ public class Lab5_ass2 {
 
     public static void main(String[] args) {
         
-        MenuManager menuManager = new MenuManager();
-        menuManager.displayMenu();
+        //MenuManager menuManager = new MenuManager();
+        //menuManager.displayMenu();
     }
 }
