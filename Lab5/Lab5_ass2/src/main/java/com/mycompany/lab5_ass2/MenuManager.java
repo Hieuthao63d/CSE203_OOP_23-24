@@ -13,7 +13,7 @@ public class MenuManager {
     private static List<Staff> staffList = new ArrayList<>();
     private static Scanner scanner = new Scanner(System.in);
 
-    public static void main(String[] args) {
+    public void displayMenu() {
         while (true) {
             System.out.println("\n1. Add Staff");
             System.out.println("2. Save and Calculate Salaries");
