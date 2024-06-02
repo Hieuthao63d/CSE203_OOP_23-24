@@ -9,18 +9,41 @@ import java.util.*;
  * @author Phan Thao
  */
  class Researcher extends Staff {
-    private List<String> projectCodes;
     private int yearsOfResearch;
+    private List<String> projectCodes;
 
-    public Researcher(String fullName, String dateOfBirth, String personnelID, List<String> projectCodes, int yearsOfResearch) {
-        super(fullName, dateOfBirth, personnelID);
-        this.projectCodes = projectCodes;
-        this.yearsOfResearch = yearsOfResearch;
+    @Override
+    public void calculateSalary() {
+        long countDProjects = projectCodes.stream().filter(p -> p.startsWith("D")).count();
+        salary = (yearsOfResearch * 2 + countDProjects) * 20000;
     }
 
     @Override
-    public double calculateSalary() {
-        long count = projectCodes.stream().filter(code -> code.startsWith("D")).count();
-        return (yearsOfResearch * 2 + count) * 20000;
+    public void inputDetails(Scanner scanner) {
+        System.out.print("Enter full name: ");
+        fullName = scanner.nextLine();
+        System.out.print("Enter date of birth: ");
+        dateOfBirth = scanner.nextLine();
+        System.out.print("Enter personnel ID: ");
+        personnelId = scanner.nextLong();
+        System.out.print("Enter years of research: ");
+        yearsOfResearch = scanner.nextInt();
+        System.out.print("Enter number of projects: ");
+        int numProjects = scanner.nextInt();
+        scanner.nextLine();  // Consume newline
+        projectCodes = new ArrayList<>();
+        for (int i = 0; i < numProjects; i++) {
+            System.out.print("Enter project code " + (i + 1) + ": ");
+            projectCodes.add(scanner.nextLine());
+        }
+        calculateSalary();
+    }
+
+    @Override
+    public void editDetails(Scanner scanner) {
+        System.out.print("Enter new full name: ");
+        fullName = scanner.nextLine();
+        // Additional edit options as needed
+        calculateSalary();
     }
 }

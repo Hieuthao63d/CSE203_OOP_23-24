@@ -3,6 +3,7 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.lab5_ass2;
+import java.util.Scanner;
 
 /**
  *
@@ -11,14 +12,15 @@ package com.mycompany.lab5_ass2;
 abstract  class Staff {
     protected String fullName;
     protected String dateOfBirth;
-    protected String personnelID;
+    protected long personnelId;
+    protected double salary;
 
-    public Staff(String fullName, String dateOfBirth, String personnelID) {
-        this.fullName = fullName;
-        this.dateOfBirth = dateOfBirth;
-        this.personnelID = personnelID;
+    public abstract void calculateSalary();
+    public abstract void inputDetails(Scanner scanner);
+    public abstract void editDetails(Scanner scanner);
+    
+    @Override
+    public String toString() {
+        return String.format("ID: %d, Name: %s, DOB: %s, Salary: %.2f", personnelId, fullName, dateOfBirth, salary);
     }
-
-    // Phương thức trừu tượng để tính lương
-    public abstract double calculateSalary();
 }

@@ -9,21 +9,40 @@ import java.util.*;
  * @author Phan Thao
  */
  class Lecturer extends Staff{
-    private String academicRank;
-    private String academicDegree;
-    private int yearsOfTeaching;
+    private int yearsOfExperience;
     private List<String> subjectsTaught;
 
-    public Lecturer(String fullName, String dateOfBirth, String personnelID, String academicRank, String academicDegree, int yearsOfTeaching, List<String> subjectsTaught) {
-        super(fullName, dateOfBirth, personnelID);
-        this.academicRank = academicRank;
-        this.academicDegree = academicDegree;
-        this.yearsOfTeaching = yearsOfTeaching;
-        this.subjectsTaught = subjectsTaught;
+    @Override
+    public void calculateSalary() {
+        salary = (subjectsTaught.size() * yearsOfExperience * 0.12) * 20000;
     }
 
     @Override
-    public double calculateSalary() {
-        return (subjectsTaught.size() * yearsOfTeaching * 0.12) * 20000;
+    public void inputDetails(Scanner scanner) {
+        System.out.print("Enter full name: ");
+        fullName = scanner.nextLine();
+        System.out.print("Enter date of birth: ");
+        dateOfBirth = scanner.nextLine();
+        System.out.print("Enter personnel ID: ");
+        personnelId = scanner.nextLong();
+        System.out.print("Enter years of experience: ");
+        yearsOfExperience = scanner.nextInt();
+        System.out.print("Enter number of subjects taught: ");
+        int numSubjects = scanner.nextInt();
+        scanner.nextLine();  // Consume newline
+        subjectsTaught = new ArrayList<>();
+        for (int i = 0; i < numSubjects; i++) {
+            System.out.print("Enter subject " + (i + 1) + ": ");
+            subjectsTaught.add(scanner.nextLine());
+        }
+        calculateSalary();
+    }
+
+    @Override
+    public void editDetails(Scanner scanner) {
+        System.out.print("Enter new full name: ");
+        fullName = scanner.nextLine();
+        // Additional edit options as needed
+        calculateSalary();
     }
 }
