@@ -24,11 +24,13 @@ public class MainFrame extends  JFrame{
 
         JButton btnNewStudent = new JButton("New Student");
         JButton btnCheckTotal = new JButton("Check Total Student");
-
+        
         btnNewStudent.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 NewStudentDialog dialog = new NewStudentDialog(MainFrame.this, studentManager);
+                dialog.setModal(true);
                 dialog.setVisible(true);
+                
             }
         });
 

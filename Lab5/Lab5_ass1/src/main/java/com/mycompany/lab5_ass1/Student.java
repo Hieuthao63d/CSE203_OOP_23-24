@@ -4,36 +4,85 @@
  */
 package com.mycompany.lab5_ass1;
 
+import java.io.Serializable;
+import java.util.Comparator;
+import java.util.Scanner;
+
 /**
  *
  * @author Phan Thao
  */
-public class Student {
-    protected String studentNumber;
-    protected String fullName;
-    protected int totalCredits;
-    protected double averageScore;
+ abstract  class Student implements Serializable{
+    private String id;
+    private String fullName;
+    private int credit;
+    private double averageScore;
+    private transient Scanner sc = new Scanner(System.in);
 
-    public Student(String studentNumber, String fullName, int totalCredits, double averageScore) {
-        this.studentNumber = studentNumber;
+    public Student() {}
+
+    public Student(String id, String fullName, int credit, double averageScore) {
+        this.id = id;
         this.fullName = fullName;
-        this.totalCredits = totalCredits;
+        this.credit = credit;
         this.averageScore = averageScore;
     }
 
-    public boolean isEligibleForGraduation() {
-        return false;
-    }
-
-    public String getStudentNumber() {
-        return studentNumber;
+    public String getId() {
+        return id;
     }
 
     public String getFullName() {
         return fullName;
     }
 
+    public int getCredit() {
+        return credit;
+    }
+
+    public double getAverageScore() {
+        return averageScore;
+    }
+
+    public void Input() {
+        System.out.print("Enter student ID: ");
+        id = sc.nextLine();
+        System.out.print("Enter student full name: ");
+        fullName = sc.nextLine();
+        System.out.print("Enter student credit: ");
+        credit = sc.nextInt();
+        System.out.print("Enter student average score: ");
+        averageScore = sc.nextDouble();
+        sc.nextLine();  // Consume newline left-over
+    }
+
+    public void Output() {
+        System.out.println("Student ID: " + id);
+        System.out.println("Student name: " + fullName);
+        System.out.println("Number of credits: " + credit);
+        System.out.println("Average score: " + averageScore);
+    }
     public String getType() {
+        if (this instanceof UniversityStudent) {
+            return "UniversityStudent";
+        } else if (this instanceof CollegeStudent) {
+            return "CollegeStudent";
+        }
         return "Student";
     }
+
+    public boolean CheckGraduation() {
+        return credit >= 100 && averageScore >= 5;
+    }
+
+    // Comparator for sorting
+    public static Comparator<Student> compareClass = new Comparator<Student>() {
+        @Override
+        public int compare(Student a, Student b) {
+            if (!a.getClass().equals(b.getClass())) {
+                return a.getClass().getName().compareTo(b.getClass().getName());
+            }
+            return a.getId().compareTo(b.getId());
+        }
+    };
 }

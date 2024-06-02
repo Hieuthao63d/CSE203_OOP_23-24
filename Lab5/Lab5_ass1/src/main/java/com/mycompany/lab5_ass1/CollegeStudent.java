@@ -3,35 +3,39 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.lab5_ass1;
-
+import java.io.*;
+import java.util.*;
 /**
  *
  * @author Phan Thao
  */
 public class CollegeStudent extends Student{
     private double graduationExamScore;
-    
-    public CollegeStudent(String studentNumber, String fullName, int totalCredits, double averageScore, double graduationExamScore){
-        super(studentNumber, fullName, totalCredits, averageScore);
+
+    public CollegeStudent() {}
+
+    public CollegeStudent(String id, String fullName, int credit, double averageScore, double graduationExamScore) {
+        super(id, fullName, credit, averageScore);
         this.graduationExamScore = graduationExamScore;
     }
+
     @Override
-    public boolean isEligibleForGraduation(){
-        return totalCredits >= 100 && averageScore >= 5 && graduationExamScore >= 5;
-        }
+    public void Input() {
+        super.Input();
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter graduation exam score: ");
+        graduationExamScore = sc.nextDouble();
+        sc.nextLine(); // Consume newline left-over
+    }
+
     @Override
-        public String getType(){
-            return "College";
-        }
+    public void Output() {
+        super.Output();
+        System.out.println("Graduation exam score: " + graduationExamScore);
+    }
+
     @Override
-        public String toString(){
-          return  "CollegeStudent{" +
-                "studentNumber='" + studentNumber + '\'' +
-                ", fullName='" + fullName + '\'' +
-                ", totalCredits=" + totalCredits +
-                ", averageScore=" + averageScore +
-                ", graduationExamScore=" + graduationExamScore +
-                '}';
- 
-        }
+    public boolean CheckGraduation() {
+        return super.CheckGraduation() && graduationExamScore >= 5;
+    }
 }
