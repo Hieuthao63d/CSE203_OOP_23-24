@@ -3,12 +3,15 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.lab6_ass1;
+
 import java.util.*;
+
 /**
  *
  * @author Phan Thao
  */
 public class StudentManager {
+
     private ArrayList<Student> students = new ArrayList<>();
 
     public boolean addStudent(Student stu) {
@@ -32,5 +35,14 @@ public class StudentManager {
 
     public ArrayList<Student> getListStudent() {
         return students;
+    }
+
+    public StudentTableModel getStudentTableModel() {
+        return new StudentTableModel(students);
+    }
+    public void removeStudent(int index) {
+        if (index >= 0 && index < students.size()) {
+            students.remove(index);
+        }
     }
 }
