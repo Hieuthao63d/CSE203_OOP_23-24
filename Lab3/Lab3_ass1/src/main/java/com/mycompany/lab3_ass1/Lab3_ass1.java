@@ -12,9 +12,18 @@ import javax.swing.SwingUtilities;
 public class Lab3_ass1 {
 
     public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            CDCollection collection = new CDCollection();
-            collection.displayAddCDFrame();
-        });
+        CDCollection cdCollection = new CDCollection();
+        Scanner scanner = new Scanner(System.in);
+        String option = "";
+
+        while (!option.equals("9")) {
+            cdCollection.displayMenu();
+            System.out.print("Enter your option: ");
+            option = scanner.nextLine();
+            cdCollection.handleOption(option, scanner);
+        }
+
+        System.out.println("Exiting...");
+        scanner.close();
     }
 }

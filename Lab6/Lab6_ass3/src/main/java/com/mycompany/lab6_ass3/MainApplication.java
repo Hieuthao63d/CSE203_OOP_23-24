@@ -2,11 +2,9 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package com.mycompany.lab3_ass1;
-
+package com.mycompany.lab6_ass3;
 import java.awt.FlowLayout;
 import javax.swing.*;
-
 /**
  *
  * @author Phan Thao
