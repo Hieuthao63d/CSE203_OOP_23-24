@@ -30,8 +30,16 @@ public class MainFrame extends JFrame {
         setLayout(new BorderLayout());
 
         JPanel buttonPanel = new JPanel();
+        JButton btnSave = new JButton("Save Students");
+        JButton btnLoad = new JButton("Load Students");
         buttonPanel.setLayout(new FlowLayout());
-
+        
+        btnSave.addActionListener(e -> studentManager.saveStudentToFile("D://Student.Dat"));
+        btnLoad.addActionListener (e -> {
+            studentManager.loadStudentFromeFile("D://Student.Dat");
+            refreshTable();
+        });
+        
         JButton btnNewStudent = new JButton("New Student");
         btnNewStudent.addActionListener(e -> {
             NewStudentDialog dialog = new NewStudentDialog(this, studentManager);
@@ -84,4 +92,5 @@ public class MainFrame extends JFrame {
             new MainFrame(new StudentManager()).setVisible(true);
         });
     }
+    
 }

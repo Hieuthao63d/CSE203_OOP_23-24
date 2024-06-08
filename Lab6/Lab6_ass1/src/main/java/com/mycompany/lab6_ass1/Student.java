@@ -4,11 +4,13 @@
  */
 package com.mycompany.lab6_ass1;
 
+import java.io.Serializable;
+
 /**
  *
  * @author Phan Thao
  */
-public class Student {
+public class Student implements Serializable{
     private String studentID;
     private String lastName;
     private String midName;

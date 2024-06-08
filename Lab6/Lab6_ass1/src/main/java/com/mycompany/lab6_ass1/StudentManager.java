@@ -4,7 +4,13 @@
  */
 package com.mycompany.lab6_ass1;
 
+import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutput;
 import java.util.*;
+import java.util.ArrayList;
+import java.io.*;
+
 
 /**
  *
@@ -21,6 +27,7 @@ public class StudentManager {
             }
         }
         students.add(stu);
+        saveStudentToFile("D://Student.Dat");
         return true;
     }
 
@@ -44,5 +51,29 @@ public class StudentManager {
         if (index >= 0 && index < students.size()) {
             students.remove(index);
         }
+        
+    }
+    public void saveStudentToFile ( String filename){
+        File file = new File (filename);
+        if (!file.getParentFile().exists()){
+            file.getParentFile().mkdir();
+        }
+        try ( ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream(filename))){
+            out.writeObject(students);
+        }catch (IOException e){
+            System.err.println("Error saving students: "+e.getMessage());
+        }
+    }
+    public void loadStudentFromeFile (String filename){
+        File file = new File(filename);
+        if(file.exists()){
+           try(ObjectInputStream in = new ObjectInputStream ( new FileInputStream(filename))){
+            students = (ArrayList<Student>)in.readObject();
+            
+        }catch (ClassNotFoundException | IOException e){
+            System.err.println("Error loading students: "+e.getMessage());
+        } 
+        }
+        
     }
 }
