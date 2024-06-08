@@ -5,22 +5,27 @@
 package com.mycompany.lab3_ass1;
 
 import java.util.*;
+import javax.swing.*;
 
 /**
  *
  * @author Phan Thao
  */
 public class CDCollection {
-    private List<CD> cds;
-
+    private List<CD> cds = new ArrayList<>();
+    private JFrame addCDFrame;
     public CDCollection() {
-        this.cds = new ArrayList<>();
+        
+        addCDFrame = new CDAddFrame(this);
     }
 
     public void addCD(CD cd) {
         cds.add(cd);
     }
-
+    public void displayAddCDFrame(){
+        addCDFrame.setVisible(true);
+    }
+    
     public CD searchByTitle(String title) {
         int index = Collections.binarySearch(cds, new CD("", "", "", title, 0, 0), CD.compareAboutTitle);
         if (index != -1) {

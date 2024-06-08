@@ -4,6 +4,7 @@
 
 package com.mycompany.lab3_ass1;
 import java.util.*;
+import javax.swing.SwingUtilities;
 /**
  *
  * @author Phan Thao
@@ -11,18 +12,9 @@ import java.util.*;
 public class Lab3_ass1 {
 
     public static void main(String[] args) {
-        CDCollection cdCollection = new CDCollection();
-        Scanner scanner = new Scanner(System.in);
-        String option = "";
-
-        while (!option.equals("9")) {
-            cdCollection.displayMenu();
-            System.out.print("Enter your option: ");
-            option = scanner.nextLine();
-            cdCollection.handleOption(option, scanner);
-        }
-
-        System.out.println("Exiting...");
-        scanner.close();
+        SwingUtilities.invokeLater(() -> {
+            CDCollection collection = new CDCollection();
+            collection.displayAddCDFrame();
+        });
     }
 }
