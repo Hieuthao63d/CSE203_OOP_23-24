@@ -39,7 +39,7 @@ public class CDStoreApp extends JFrame {
     }
 
     private void initializeComponents() {
-        table = new JTable(new DefaultTableModel(new Object[]{"ID","Title", "Collection", "Type", "Price"}, 0));
+        table = new JTable(new DefaultTableModel(new Object[]{"ID", "Title", "Collection", "Type", "Price"}, 0));
         JScrollPane scrollPane = new JScrollPane(table);
         add(scrollPane, BorderLayout.CENTER);
 
@@ -56,6 +56,8 @@ public class CDStoreApp extends JFrame {
         btnRefresh.addActionListener(e -> refreshCDList());
         btnDelete.addActionListener(e -> deleteCD());
         btnRestore.addActionListener(e -> restoreCD());
+        btnBackup.addActionListener(e -> backupDataToFile());
+
 
         btnSearch.addActionListener(e -> searchCD());
     }
@@ -99,24 +101,45 @@ public class CDStoreApp extends JFrame {
     }
 
     private void deleteCD() {
-        String title = txtSearch.getText();
-        DefaultTableModel model = (DefaultTableModel) table.getModel();
-        for (int i = 0; i < model.getRowCount(); i++) {
-            if (model.getValueAt(i, 0).toString().equalsIgnoreCase(title)) {
-                // Save the deleted CD data for restore functionality
-                lastDeletedCD = new CD("some-id", model.getValueAt(i, 0).toString(), model.getValueAt(i, 1).toString(), model.getValueAt(i, 2).toString(), Double.parseDouble(model.getValueAt(i, 3).toString()));
-
-                model.removeRow(i);
-                break;
-            }
+        int selectedRow = table.getSelectedRow(); // Lấy hàng được chọn
+        if (selectedRow >= 0) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            // Lưu thông tin CD trước khi xóa
+            lastDeletedCD = new CD(model.getValueAt(selectedRow, 0).toString(),
+                    model.getValueAt(selectedRow, 1).toString(),
+                    model.getValueAt(selectedRow, 2).toString(),
+                    model.getValueAt(selectedRow, 3).toString(),
+                    Double.parseDouble(model.getValueAt(selectedRow, 4).toString()));
+            model.removeRow(selectedRow); // Xóa hàng
         }
     }
 
     private void restoreCD() {
         if (lastDeletedCD != null) {
             DefaultTableModel model = (DefaultTableModel) table.getModel();
-            model.addRow(new Object[]{lastDeletedCD.getTitle(), lastDeletedCD.getCollection(), lastDeletedCD.getType(), lastDeletedCD.getPrice()});
-            lastDeletedCD = null; // Reset after restoring
+            model.addRow(new Object[]{lastDeletedCD.getId(), lastDeletedCD.getTitle(),
+                lastDeletedCD.getCollection(), lastDeletedCD.getType(),
+                lastDeletedCD.getPrice()});
+            lastDeletedCD = null; // Reset sau khi khôi phục
+        }
+    }
+
+    private void backupDataToFile() {
+        File file = new File("D://CD.txt"); // Đường dẫn đến file
+        try (PrintWriter writer = new PrintWriter(file)) {
+            DefaultTableModel model = (DefaultTableModel) table.getModel();
+            for (int i = 0; i < model.getRowCount(); i++) {
+                StringBuilder sb = new StringBuilder();
+                for (int j = 0; j < model.getColumnCount()+1; j++) {
+                    sb.append(model.getValueAt(i, j));
+                    if (j < model.getColumnCount() - 1) {
+                        sb.append(","); // Thêm dấu phẩy giữa các giá trị
+                    }
+                }
+                writer.println(sb.toString()); // Ghi dữ liệu vào file
+            }
+        } catch (Exception ex) {
+            JOptionPane.showMessageDialog(this, "Error writing to file: " + ex.getMessage(), "Error", JOptionPane.ERROR_MESSAGE);
         }
     }
 
