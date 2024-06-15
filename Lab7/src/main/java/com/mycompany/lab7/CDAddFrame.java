@@ -3,15 +3,18 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
 package com.mycompany.lab7;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
 import java.io.*;
+
 /**
  *
  * @author Phan Thao
  */
-public class CDAddFrame extends JFrame{
+public class CDAddFrame extends JFrame {
+
     private JTextField txtID, txtTitle, txtPrice, txtYear;
     private JComboBox<String> cbCollection;
     private JRadioButton rbVCD, rbCD;
@@ -35,7 +38,7 @@ public class CDAddFrame extends JFrame{
         txtID = new JTextField(10);
         txtTitle = new JTextField(10);
         txtPrice = new JTextField(10);
-        txtYear = new JTextField(10);
+        // txtYear = new JTextField(10); // Xóa dòng này
         String[] collections = {"movie", "music", "game"};
         cbCollection = new JComboBox<>(collections);
         rbVCD = new JRadioButton("VCD", true);
@@ -53,7 +56,7 @@ public class CDAddFrame extends JFrame{
         GridBagConstraints gbc = new GridBagConstraints();
         gbc.insets = new Insets(5, 5, 5, 5);
         gbc.anchor = GridBagConstraints.WEST;
-        
+
         gbc.gridx = 0;
         gbc.gridy = 0;
         add(new JLabel("CD ID:"), gbc);
@@ -65,8 +68,6 @@ public class CDAddFrame extends JFrame{
         add(new JLabel("CD Type:"), gbc);
         gbc.gridy++;
         add(new JLabel("CD Price:"), gbc);
-        gbc.gridy++;
-        add(new JLabel("CD Year of Release:"), gbc);
 
         gbc.gridx = 1;
         gbc.gridy = 0;
@@ -82,10 +83,8 @@ public class CDAddFrame extends JFrame{
         add(radioPanel, gbc);
         gbc.gridy++;
         add(txtPrice, gbc);
-        gbc.gridy++;
-        add(txtYear, gbc);
 
-        // Button layout in the same row
+        // Bố trí nút
         gbc.gridwidth = 1;
         gbc.gridx = 0;
         gbc.gridy++;
@@ -102,14 +101,13 @@ public class CDAddFrame extends JFrame{
         String type = rbVCD.isSelected() ? "VCD" : "CD";
         String collection = (String) cbCollection.getSelectedItem();
         String price = txtPrice.getText();
-        String year = txtYear.getText();
 
         // Save to file
         try (PrintWriter out = new PrintWriter(new FileWriter("D:/CD.txt", true))) {
-            out.println(id + "," + title + "," + collection + "," + type + "," + price + "," + year);
+            out.println(id + "," + title + "," + collection + "," + type + "," + price);
         } catch (IOException ioException) {
             JOptionPane.showMessageDialog(this, "Error saving CD data.", "Error", JOptionPane.ERROR_MESSAGE);
         }
-        dispose(); // Close the frame after saving
+        dispose(); // Đóng cửa sổ sau khi lưu
     }
 }

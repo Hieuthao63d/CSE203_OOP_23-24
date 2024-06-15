@@ -24,7 +24,8 @@ public class CDStoreApp extends JFrame {
     private JButton btnNewCD, btnSearch, btnDelete, btnBackup, btnRestore, btnRefresh;
     private CDCollection cdCollection;
     private CD lastDeletedCD; // To store last deleted CD for restore functionality
-    private static final int expectedColumnCount = 6;
+    private static final int expectedColumnCount = 5;
+    private JComboBox<String> cbSearchType;
 
     public CDStoreApp() {
         setTitle("CD Store");
@@ -51,6 +52,9 @@ public class CDStoreApp extends JFrame {
         btnSearch = new JButton("Search");
 
         txtSearch = new JTextField(10);
+        String[] searchOptions = {"Type", "Title", "Collection"};
+        cbSearchType = new JComboBox<>(searchOptions); // ComboBox for selecting search type
+        cbSearchType.setSelectedIndex(0);
 
         btnNewCD.addActionListener(e -> displayNewCDFrame());
         btnRefresh.addActionListener(e -> refreshCDList());
@@ -58,8 +62,8 @@ public class CDStoreApp extends JFrame {
         btnRestore.addActionListener(e -> restoreCD());
         btnBackup.addActionListener(e -> backupDataToFile());
 
-
         btnSearch.addActionListener(e -> searchCD());
+        layoutComponents();
     }
 
     private void layoutComponents() {
@@ -70,12 +74,21 @@ public class CDStoreApp extends JFrame {
         topPanel.add(btnRefresh);
         topPanel.add(btnDelete);
         add(topPanel, BorderLayout.NORTH);
+        
 
         JPanel bottomPanel = new JPanel();
         bottomPanel.add(new JLabel("Search:"));
         bottomPanel.add(txtSearch);
         bottomPanel.add(btnSearch);
         add(bottomPanel, BorderLayout.SOUTH);
+
+        JPanel searchPanel = new JPanel();
+        searchPanel.add(new JLabel("Search by:"));
+        searchPanel.add(cbSearchType);  // Thêm JComboBox vào panel
+        searchPanel.add(txtSearch);
+        searchPanel.add(btnSearch);
+        add(searchPanel, BorderLayout.SOUTH);
+        
     }
 
     private void displayNewCDFrame() {
@@ -130,7 +143,7 @@ public class CDStoreApp extends JFrame {
             DefaultTableModel model = (DefaultTableModel) table.getModel();
             for (int i = 0; i < model.getRowCount(); i++) {
                 StringBuilder sb = new StringBuilder();
-                for (int j = 0; j < model.getColumnCount()+1; j++) {
+                for (int j = 0; j < model.getColumnCount(); j++) {
                     sb.append(model.getValueAt(i, j));
                     if (j < model.getColumnCount() - 1) {
                         sb.append(","); // Thêm dấu phẩy giữa các giá trị
@@ -145,10 +158,27 @@ public class CDStoreApp extends JFrame {
 
     private void searchCD() {
         String searchText = txtSearch.getText().toLowerCase();
+        String searchType = cbSearchType.getSelectedItem().toString().toLowerCase();
         DefaultTableModel model = (DefaultTableModel) table.getModel();
         TableRowSorter<DefaultTableModel> sorter = new TableRowSorter<>(model);
         table.setRowSorter(sorter);
-        sorter.setRowFilter(RowFilter.regexFilter(searchText));
+
+        // Depending on the search type, set the column index for filter
+        int columnIndex = -1;
+        switch (searchType) {
+            case "title":
+                columnIndex = 1; // Assuming title is at column index 1
+                break;
+            case "collection":
+                columnIndex = 2; // Assuming collection is at column index 2
+                break;
+            case "type":
+                columnIndex = 3; // Assuming type is at column index 3
+                break;
+        }
+        if (columnIndex != -1) {
+            sorter.setRowFilter(RowFilter.regexFilter(searchText, columnIndex));
+        }
     }
 
     public static void main(String[] args) {
