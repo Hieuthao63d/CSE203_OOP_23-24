@@ -8,10 +8,8 @@ package com.mycompany.observer_pattern;
  *
  * @author Phan Thao
  */
-public class Investor {
-    interface Investor {
+interface Investor {
         String getName();
-        Strategy addaptStrategy();
+        Strategy addaptsStrategy();
       void update(String stockSymbol, double priceChange);
-    }
 }

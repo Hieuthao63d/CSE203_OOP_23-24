@@ -13,5 +13,5 @@ import java.util.*;
 public interface Stock {
     public void addObserver(Investor investor);
     public void removeObserver(Investor investor);
-    public void nitifyInvestors(double priceChange);
+    public void notifyInvestors(double priceChange);
 }
